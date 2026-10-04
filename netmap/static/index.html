@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mapa de Red</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='5' r='3' fill='%232a78d6'/><circle cx='5' cy='19' r='3' fill='%232a78d6'/><circle cx='19' cy='19' r='3' fill='%23eb6834'/><path d='M12 8v4M12 12l-6 5M12 12l6 5' stroke='%23888' stroke-width='2'/></svg>">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Mapa de red</h1>
+      <p class="sub" id="lastScan">Cargando…</p>
+    </div>
+    <div class="actions">
+      <span class="demo-badge" id="demoBadge" hidden>Datos de ejemplo</span>
+      <button id="scanBtn" class="primary"><span class="spinner" hidden></span><span class="label">Escanear ahora</span></button>
+    </div>
+  </header>
+
+  <div id="notes"></div>
+
+  <nav class="tabs" id="siteTabs" aria-label="Sitio"></nav>
+
+  <section class="tiles" id="tiles" aria-label="Resumen"></section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Cómo está conectado todo</h2>
+      <div class="legend">
+        <span><i class="ln cable"></i> Cable</span>
+        <span><i class="ln wifi"></i> Wifi</span>
+        <span><i class="ln unknown"></i> Sin confirmar</span>
+      </div>
+    </div>
+    <div id="tree" class="tree"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Todos los equipos</h2>
+      <div class="filters">
+        <input id="q" type="search" placeholder="Buscar IP, nombre, MAC, marca…" aria-label="Buscar">
+        <select id="fConn" aria-label="Conexión">
+          <option value="">Toda conexión</option>
+          <option value="cable">Cable</option>
+          <option value="wifi">Wifi</option>
+          <option value="none">Sin saber</option>
+        </select>
+        <select id="fState" aria-label="Estado">
+          <option value="online">En línea</option>
+          <option value="">En línea y desconectados</option>
+          <option value="offline">Desconectados</option>
+          <option value="new">Nuevos</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table id="table">
+        <thead>
+          <tr>
+            <th data-sort="ip">IP</th>
+            <th data-sort="name">Equipo</th>
+            <th data-sort="type">Tipo</th>
+            <th data-sort="connection">Conexión</th>
+            <th data-sort="parent">Conectado a</th>
+            <th data-sort="vendor">Fabricante</th>
+            <th data-sort="mac">MAC</th>
+            <th>Servicios</th>
+            <th data-sort="last_seen">Visto</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="empty" id="emptyTable" hidden>No hay equipos con esos filtros.</p>
+  </section>
+
+  <dialog id="dlg">
+    <form method="dialog" id="dlgForm">
+      <header class="dlg-head">
+        <h3 id="dlgTitle"></h3>
+        <button value="cancel" class="icon-btn" aria-label="Cerrar">✕</button>
+      </header>
+      <dl id="dlgInfo" class="info"></dl>
+      <fieldset>
+        <legend>Editar</legend>
+        <label>Nombre <input name="name" placeholder="p.ej. TV del living"></label>
+        <label>Tipo <select name="type"></select></label>
+        <label>Conexión
+          <select name="connection">
+            <option value="">Automático</option>
+            <option value="cable">Cable</option>
+            <option value="wifi">Wifi</option>
+          </select>
+        </label>
+        <label>Conectado a <select name="parent"></select></label>
+        <label>Puerto <input name="port" placeholder="opcional"></label>
+        <label class="wide">Notas <input name="notes" placeholder="opcional"></label>
+      </fieldset>
+      <footer class="dlg-foot">
+        <button type="button" id="forgetBtn" class="danger" hidden>Olvidar equipo</button>
+        <span class="grow"></span>
+        <button value="cancel">Cancelar</button>
+        <button value="save" class="primary">Guardar</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
